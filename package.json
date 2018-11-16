@@ -1,0 +1,52 @@
+{
+  "name": "spacewars",
+  "version": "1.0.0",
+  "description": "A space wars html game",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --content-base src/ --mode development --open",
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nakioman/spacewars.git"
+  },
+  "keywords": [
+    "html",
+    "space",
+    "wars",
+    "pixijs",
+    "pixi",
+    "javascript"
+  ],
+  "author": "Nacho Glinsek",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nakioman/spacewars/issues"
+  },
+  "homepage": "https://github.com/nakioman/spacewars#readme",
+  "dependencies": {
+    "pixi.js": "^4.8.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.6",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/preset-env": "^7.1.6",
+    "@types/pixi.js": "^4.8.3",
+    "babel-loader": "^8.0.4",
+    "css-loader": "^1.0.1",
+    "file-loader": "^2.0.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.4.4",
+    "ts-loader": "^5.3.0",
+    "tslint": "^5.11.0",
+    "tslint-webpack-plugin": "^1.2.2",
+    "typescript": "^3.1.6",
+    "url-loader": "^1.1.2",
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
+  }
+}
