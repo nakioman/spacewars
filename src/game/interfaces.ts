@@ -1,9 +1,15 @@
 import { Container, loaders, SystemRenderer } from 'pixi.js';
 
+export interface IGame {
+  renderer: SystemRenderer;
+  spriteSheet: loaders.Resource;
+  stage: Container;
+}
+
 export interface IActor {
-  loadContent(spriteSheet: loaders.Resource, container: Container): void;
+  loadContent(game: IGame): void;
 
-  draw(): void;
+  draw(game: IGame): void;
 
-  update(renderer: SystemRenderer): void;
+  update(game: IGame): void;
 }

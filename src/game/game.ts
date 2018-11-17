@@ -1,13 +1,13 @@
 import { autoDetectRenderer, Container, loaders, SystemRenderer } from 'pixi.js';
-import { IActor } from './interfaces';
+import { IActor, IGame } from './interfaces';
 import Player from './palyer';
 
-export default class Game {
+export default class Game implements IGame {
   public stage: Container;
   public renderer: SystemRenderer;
   public loader: loaders.Loader;
   public spriteSheet: loaders.Resource;
-  public player: IActor;
+  private player: IActor;
 
   private intervalId: number;
 
@@ -56,7 +56,7 @@ export default class Game {
     return new Promise<void>((resolve) => {
       this.loader.add('sheet', 'img/sheet.json').load(() => {
         this.spriteSheet = this.loader.resources.sheet;
-        this.player.loadContent(this.spriteSheet, this.stage);
+        this.player.loadContent(this);
 
         resolve();
       });
@@ -64,11 +64,11 @@ export default class Game {
   }
 
   public draw = () => {
-    this.player.draw();
+    this.player.draw(this);
     this.renderer.render(this.stage);
   }
 
   public update = () => {
-    this.player.update(this.renderer);
+    this.player.update(this);
   }
 }
