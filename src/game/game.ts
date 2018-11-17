@@ -1,13 +1,11 @@
 import { autoDetectRenderer, Container, loaders, SystemRenderer } from 'pixi.js';
-import { IActor, IGame } from './interfaces';
-import Player from './palyer';
+import Player from './player';
 
-export default class Game implements IGame {
+export default class Game {
   public stage: Container;
   public renderer: SystemRenderer;
-  public loader: loaders.Loader;
   public spriteSheet: loaders.Resource;
-  private player: IActor;
+  private player: Player;
 
   private intervalId: number;
 
@@ -17,58 +15,32 @@ export default class Game implements IGame {
     }
 
     this.stage = new Container();
+
     this.renderer = autoDetectRenderer(width, height, {
       antialias: true,
       autoResize: true,
       transparent: true,
     });
 
-    this.loader = new loaders.Loader();
-
     element.appendChild(this.renderer.view);
 
-    const originX = width / 2;
-    const originY = height / 2;
-    this.player = new Player(originX, originY);
-  }
-
-  public start = async () => {
-    const fps = 60;
-    const ticks = 1000 / fps;
-
-    await this.loadContent();
-
-    this.intervalId = setInterval(() => {
-      this.update();
-      requestAnimationFrame(this.draw);
-    }, ticks);
-  }
-
-  public stop = () => {
-    clearInterval(this.intervalId);
-  }
-
-  public resize = (width: number, height: number) => {
-    this.renderer.resize(width, height);
-  }
-
-  public loadContent() {
-    return new Promise<void>((resolve) => {
-      this.loader.add('sheet', 'img/sheet.json').load(() => {
-        this.spriteSheet = this.loader.resources.sheet;
-        this.player.loadContent(this);
-
-        resolve();
-      });
+    const loader = new loaders.Loader();
+    loader.add('sheet', 'img/sheet.json').load(() => {
+      this.spriteSheet = loader.resources.sheet;
+      this.setupEntities();
+      requestAnimationFrame(this.update.bind(this));
     });
   }
 
-  public draw = () => {
-    this.player.draw(this);
+  public update() {
+    this.player.update();
     this.renderer.render(this.stage);
+    requestAnimationFrame(this.update.bind(this));
   }
 
-  public update = () => {
-    this.player.update(this);
+  private setupEntities() {
+    const originX = this.renderer.width / 2;
+    const originY = this.renderer.height / 2;
+    this.player = new Player(originX, originY, this);
   }
 }
