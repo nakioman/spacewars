@@ -8,7 +8,7 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
+        use: [{ loader: 'babel-loader' }, { loader: 'ts-loader' }],
         exclude: /node_modules/,
       },
       {
@@ -43,15 +43,30 @@ module.exports = {
       filename: './index.html',
     }),
     new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFilename: '[id].css',
+      filename: '[name].[hash:4].css',
+      chunkFilename: '[id].[hash:4].css',
     }),
     new TSLintPlugin({
       files: ['./src/**/*.ts'],
     }),
   ],
-  devtool: 'inline-source-map',
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
+  },
+  output: {
+    filename: '[name].[hash:4].js',
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /node_modules/,
+          chunks: 'initial',
+          name: 'vendor',
+          enforce: true,
+        },
+      },
+    },
+    runtimeChunk: true,
   },
 };
