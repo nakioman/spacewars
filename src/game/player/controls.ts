@@ -7,19 +7,25 @@ export default class Controls {
     this.pressed = {};
   }
 
-  public isMovingRight(): any {
+  public isAnyKeyPressed(): boolean {
+    return (
+      this.isMovingRight() || this.isMovingLeft() || this.isMovingUp() || this.isMovingDown()
+    );
+  }
+
+  public isMovingRight(): boolean {
     return this.isDown(Key.Right) || this.isDown(Key.D);
   }
 
-  public isMovingLeft(): any {
+  public isMovingLeft(): boolean {
     return this.isDown(Key.Left) || this.isDown(Key.A);
   }
 
-  public isMovingDown(): any {
+  public isMovingDown(): boolean {
     return this.isDown(Key.Down) || this.isDown(Key.S);
   }
 
-  public isMovingUp(): any {
+  public isMovingUp(): boolean {
     return this.isDown(Key.Up) || this.isDown(Key.W);
   }
 

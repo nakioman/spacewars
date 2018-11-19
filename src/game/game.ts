@@ -1,4 +1,5 @@
 import { autoDetectRenderer, Container, loaders, SystemRenderer } from 'pixi.js';
+import Enemy from './enemy';
 import Player from './player';
 
 export default class Game {
@@ -6,6 +7,7 @@ export default class Game {
   public renderer: SystemRenderer;
   public spriteSheet: loaders.Resource;
   private player: Player;
+  private enemy: Enemy;
 
   private intervalId: number;
 
@@ -34,6 +36,7 @@ export default class Game {
 
   public update() {
     this.player.update();
+    this.enemy.update();
     this.renderer.render(this.stage);
     requestAnimationFrame(this.update.bind(this));
   }
@@ -42,5 +45,6 @@ export default class Game {
     const originX = this.renderer.width / 2;
     const originY = this.renderer.height / 2;
     this.player = new Player(originX, originY, this);
+    this.enemy = new Enemy(this, this.player);
   }
 }
