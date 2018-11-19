@@ -1,6 +1,7 @@
 import { Container, loaders, SystemRenderer } from 'pixi.js';
 import PlayerBodySprite from './bodySprite';
 import ProyectileSprite from './proyectileSprite';
+import Status from './status';
 
 const bulletSpeed: number = 5;
 const nextBulletCycles: number = 30;
@@ -10,9 +11,10 @@ export default class Shooting {
   private bulletCycles: number;
 
   constructor(
+    private body: PlayerBodySprite,
+    private status: Status,
     private renderer: SystemRenderer,
     private spriteSheet: loaders.Resource,
-    private body: PlayerBodySprite,
     private stage: Container,
   ) {
     this.bullets = [];
@@ -20,14 +22,17 @@ export default class Shooting {
   }
 
   public update() {
-    this.shoot();
+    if (this.status.health > 0) {
+      this.shoot();
+    }
+
     this.animateBullets();
     this.removeBulletsOffScreen();
   }
 
   private shoot() {
     if (this.bulletCycles === 0) {
-      const bullet = new ProyectileSprite(this.spriteSheet, this.body, this.stage);
+      const bullet = new ProyectileSprite(this.body, this.spriteSheet, this.stage);
       this.bullets.push(bullet);
       this.bulletCycles = nextBulletCycles;
     }

@@ -35,8 +35,10 @@ export default class Game {
   }
 
   public update() {
+    if (this.player.health > 0) {
+      this.enemy.update();
+    }
     this.player.update();
-    this.enemy.update();
     this.renderer.render(this.stage);
     requestAnimationFrame(this.update.bind(this));
   }

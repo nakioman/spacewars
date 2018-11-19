@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/nakioman/spacewars#readme",
   "dependencies": {
+    "pixi-particles": "^3.1.0",
     "pixi.js": "^4.8.2"
   },
   "devDependencies": {

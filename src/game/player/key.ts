@@ -7,6 +7,7 @@ enum Key {
   S = 83,
   A = 65,
   D = 68,
+  K = 75,
 }
 
 export default Key;

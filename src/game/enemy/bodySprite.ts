@@ -40,8 +40,8 @@ export default class EnemyBodySprite {
     const y = Math.round(Math.random()) * renderer.height;
 
     this.body = new Sprite(playerTexture);
-    this.body.position.x = x;
-    this.body.position.y = y;
+    this.body.x = x;
+    this.body.y = y;
     this.body.anchor.set(0.5, 0.5);
     this.body.rotation = 0;
 
