@@ -3,10 +3,12 @@
     "outDir": "./dist/",
     "noImplicitAny": true,
     "module": "commonjs",
-    "target": "es2015",
+    "target": "es5",
     "allowJs": true,
     "sourceMap": true,
     "resolveJsonModule": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "lib": ["es2015", "dom"],
+    "downlevelIteration": true
   }
 }
