@@ -1,14 +1,14 @@
-import Player from '../player';
-import EnemyBodySprite from './bodySprite';
+import BodySprite from '../common/bodySprite';
+import { IPosition } from '../engine/interfaces';
 
-const enemySpeed: number = 3;
+const enemySpeed: number = 2;
 
 export default class EnemyMovement {
-  constructor(private enemy: EnemyBodySprite, private player: Player) {}
+  constructor(private enemy: BodySprite, private playerPosition: IPosition) {}
 
   public update(): void {
-    const dx = this.player.x - this.enemy.x;
-    const dy = this.player.y - this.enemy.y;
+    const dx = this.playerPosition.x - this.enemy.x;
+    const dy = this.playerPosition.y - this.enemy.y;
     const len = Math.sqrt(dx * dx + dy * dy);
     if (len > 1) {
       this.enemy.x += (dx / len) * enemySpeed;

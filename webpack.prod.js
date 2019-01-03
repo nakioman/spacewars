@@ -15,6 +15,13 @@ module.exports = merge(common, {
         flatten: true,
       },
     ]),
+    new CopyWebpackPlugin([
+      {
+        from: 'src/snd/**/*',
+        to: 'snd/',
+        flatten: true,
+      },
+    ]),
   ],
   optimization: {
     minimizer: [

@@ -1,11 +1,22 @@
-import { HitArea } from 'pixi.js';
-import Game from '../game';
-import PlayerBodySprite from './bodySprite';
+import { Howl } from 'howler';
+import { Container, HitArea, loaders, Point } from 'pixi.js';
+import getParticle from '../../particles/explosion';
+import BodySprite from '../common/bodySprite';
+import {
+  IDestroy,
+  IHitArea,
+  IPosition,
+  IScene,
+  ISceneObject,
+} from '../engine/interfaces';
+import ResourceManager from '../engine/resourceManager';
+import GameScene from '../scenes/game';
 import PlayerMovement from './movement';
 import Shooting from './shooting';
-import Status from './status';
 
-export default class Player {
+const textureName: string = 'playerShip2_green.png';
+
+export default class Player implements ISceneObject, IPosition, IHitArea, IDestroy {
   public get x(): number {
     return this.body.x;
   }
@@ -18,25 +29,48 @@ export default class Player {
     return this.body.hitArea;
   }
 
-  public get health(): number {
-    return this.status.health;
-  }
+  public spriteSheet: loaders.Resource;
+  private object: Container = new Container();
 
-  private status: Status;
-  private body: PlayerBodySprite;
+  private body: BodySprite;
   private playerMovement: PlayerMovement;
   private shooting: Shooting;
+  private shootingSound: Howl;
 
-  constructor(x: number, y: number, game: Game) {
-    this.status = new Status();
-    this.body = new PlayerBodySprite(x, y, this.status, game.spriteSheet, game.stage);
-    this.playerMovement = new PlayerMovement(this.body, this.status, game.renderer);
+  public constructor(private scene: GameScene) {}
+
+  public async preload() {
+    this.spriteSheet = await ResourceManager.create('gameSheet', 'img/sheet.json');
+    await new Promise<void>((resolve) => {
+      this.shootingSound = new Howl({
+        src: ['snd/laser_shoot.ogg', 'snd/laser_shoot.mp3'],
+      });
+      this.shootingSound.on('load', () => {
+        resolve();
+      });
+    });
+  }
+
+  public create(scene: IScene) {
+    scene.container.addChild(this.object);
+
+    const playerTexture = this.spriteSheet.textures[textureName];
+    const explosionParticle = getParticle();
+
+    this.body = new BodySprite(
+      scene.viewport.centerX,
+      scene.viewport.centerY,
+      playerTexture,
+      explosionParticle,
+      this.object,
+    );
+    this.playerMovement = new PlayerMovement(this.body);
     this.shooting = new Shooting(
       this.body,
-      this.status,
-      game.renderer,
-      game.spriteSheet,
-      game.stage,
+      this.spriteSheet,
+      this.object,
+      this.shootingSound,
+      this.scene,
     );
   }
 
@@ -45,7 +79,8 @@ export default class Player {
   }
 
   public containsPoint(x: number, y: number): boolean {
-    return this.body.containsPoint(x, y);
+    const globalPoint = this.object.toGlobal(new Point(x, y));
+    return this.body.containsPoint(globalPoint.x, globalPoint.y);
   }
 
   public update(): void {

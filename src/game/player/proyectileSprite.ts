@@ -1,6 +1,5 @@
 import { Container, loaders, Sprite } from 'pixi.js';
-import Player from '.';
-import PlayerBodySprite from './bodySprite';
+import BodySprite from '../common/bodySprite';
 
 const bulletTextureName = 'Lasers/laserRed01.png';
 
@@ -30,11 +29,7 @@ export default class ProyectileSprite {
     this.bullet.rotation = value;
   }
 
-  constructor(
-    body: PlayerBodySprite,
-    spriteSheet: loaders.Resource,
-    private stage: Container,
-  ) {
+  constructor(body: BodySprite, spriteSheet: loaders.Resource, private stage: Container) {
     const bulletTexture = spriteSheet.textures[bulletTextureName];
     this.bullet = new Sprite(bulletTexture);
 

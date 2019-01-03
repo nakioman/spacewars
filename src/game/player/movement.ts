@@ -1,26 +1,17 @@
-import { SystemRenderer } from 'pixi.js';
-import PlayerBodySprite from './bodySprite';
+import BodySprite from '../common/bodySprite';
+import Viewport from '../engine/viewport';
 import Controls from './controls';
-import Status from './status';
 
 export default class PlayerMovement {
   private readonly playerSpeed = 2.5;
   private controls: Controls = new Controls();
 
-  constructor(
-    private body: PlayerBodySprite,
-    private status: Status,
-    private renderer: SystemRenderer,
-  ) {
+  constructor(private body: BodySprite) {
     window.addEventListener('keyup', (event) => this.controls.onKeyUp(event), false);
     window.addEventListener('keydown', (event) => this.controls.onKeyDown(event), false);
   }
 
   public update() {
-    if (this.status.health === 0) {
-      return;
-    }
-
     let x = this.body.x;
     let y = this.body.y;
 
@@ -38,14 +29,15 @@ export default class PlayerMovement {
     }
 
     if (y < 0) {
-      y = this.renderer.height;
-    } else if (y > this.renderer.height) {
+      y = Viewport.height;
+      // y = this.renderer.height;
+    } else if (y > Viewport.height) {
       y = 0;
     }
 
     if (x < 0) {
-      x = this.renderer.width;
-    } else if (x > this.renderer.width) {
+      x = Viewport.width;
+    } else if (x > Viewport.width) {
       x = 0;
     }
 
