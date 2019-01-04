@@ -2,12 +2,16 @@
   "name": "spacewars",
   "version": "1.0.0",
   "description": "A space wars html game",
+  "engines": {
+    "node": ">= 8.11.3",
+    "npm": "~5.6.0"
+  },
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --content-base src/ --mode development --open --config webpack.dev.js",
     "dev": "webpack --mode development --config webpack.dev.js",
     "build": "webpack --mode production --config webpack.prod.js",
-    "heroku-prebuild": "npm run build"
+    "heroku-postbuild": "npm run build"
   },
   "repository": {
     "type": "git",
