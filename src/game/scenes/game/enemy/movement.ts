@@ -1,5 +1,5 @@
+import { IPosition } from '../../../engine/interfaces';
 import BodySprite from '../common/bodySprite';
-import { IPosition } from '../engine/interfaces';
 
 const enemySpeed: number = 2;
 

@@ -1,5 +1,4 @@
 import { Container } from 'pixi.js';
-import Enemy from '../../enemy';
 import {
   IDestroy,
   IHitArea,
@@ -9,7 +8,8 @@ import {
   IShootable,
 } from '../../engine/interfaces';
 import Viewport from '../../engine/viewport';
-import Player from '../../player';
+import Enemy from './enemy';
+import Player from './player';
 import PlayerCollision from './playerCollision';
 
 const deltaTime = 5000;

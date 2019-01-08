@@ -1,5 +1,5 @@
+import Viewport from '../../../engine/viewport';
 import BodySprite from '../common/bodySprite';
-import Viewport from '../engine/viewport';
 import Controls from './controls';
 
 export default class PlayerMovement {

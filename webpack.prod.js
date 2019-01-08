@@ -10,16 +10,9 @@ module.exports = merge(common, {
     new CompressionPlugin(),
     new CopyWebpackPlugin([
       {
-        from: 'src/img/**/*',
-        to: 'img/',
-        flatten: true,
-      },
-    ]),
-    new CopyWebpackPlugin([
-      {
-        from: 'src/snd/**/*',
-        to: 'snd/',
-        flatten: true,
+        from: 'src/assets/',
+        to: 'assets/',
+        flatten: false,
       },
     ]),
   ],
