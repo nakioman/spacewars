@@ -37,3 +37,7 @@ export interface IShootable {
   health: number;
   hit(x: number, y: number): boolean;
 }
+
+export interface IScore {
+  score: number;
+}

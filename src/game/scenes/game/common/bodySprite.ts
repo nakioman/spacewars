@@ -1,8 +1,8 @@
 import { Emitter } from 'pixi-particles';
 import { Container, HitArea, Point, Rectangle, Sprite, Texture } from 'pixi.js';
-import ResourceManager from '../engine/resourceManager';
+import ResourceManager from '../../../engine/resourceManager';
 
-const explosionTextureName: string = 'img/particle.png';
+const explosionTextureName: string = 'assets/img/particle.png';
 
 export default class BodySprite {
   public get x(): number {

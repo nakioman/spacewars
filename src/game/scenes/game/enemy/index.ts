@@ -1,9 +1,9 @@
 import { Container, loaders, Point } from 'pixi.js';
-import getParticle from '../../particles/explosion';
+import { IPosition, IScene, ISceneObject, IShootable } from '../../../engine/interfaces';
+import ResourceManager from '../../../engine/resourceManager';
+import Viewport from '../../../engine/viewport';
+import getParticle from '../../../particles/explosion';
 import RotableBodySprite from '../common/rotableBodySprite';
-import { IPosition, IScene, ISceneObject, IShootable } from '../engine/interfaces';
-import ResourceManager from '../engine/resourceManager';
-import Viewport from '../engine/viewport';
 import EnemyMovement from './movement';
 
 const textureNames: string[] = ['ufoBlue.png', 'ufoGreen.png', 'ufoRed.png', 'ufoYellow.png'];
@@ -27,7 +27,7 @@ export default class Enemy implements ISceneObject, IPosition, IShootable {
   constructor(private playerPosition: IPosition) {}
 
   public async preload() {
-    this.spriteSheet = await ResourceManager.create('gameSheet', 'img/sheet.json');
+    this.spriteSheet = await ResourceManager.create('gameSheet', 'assets/img/sheet.json');
   }
 
   public create(scene: IScene) {

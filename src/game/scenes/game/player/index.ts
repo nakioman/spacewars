@@ -1,16 +1,16 @@
 import { Howl } from 'howler';
 import { Container, HitArea, loaders, Point } from 'pixi.js';
-import getParticle from '../../particles/explosion';
-import BodySprite from '../common/bodySprite';
+import GameScene from '../';
 import {
   IDestroy,
   IHitArea,
   IPosition,
   IScene,
   ISceneObject,
-} from '../engine/interfaces';
-import ResourceManager from '../engine/resourceManager';
-import GameScene from '../scenes/game';
+} from '../../../engine/interfaces';
+import ResourceManager from '../../../engine/resourceManager';
+import getParticle from '../../../particles/explosion';
+import BodySprite from '../common/bodySprite';
 import PlayerMovement from './movement';
 import Shooting from './shooting';
 
@@ -40,10 +40,10 @@ export default class Player implements ISceneObject, IPosition, IHitArea, IDestr
   public constructor(private scene: GameScene) {}
 
   public async preload() {
-    this.spriteSheet = await ResourceManager.create('gameSheet', 'img/sheet.json');
+    this.spriteSheet = await ResourceManager.create('gameSheet', 'assets/img/sheet.json');
     await new Promise<void>((resolve) => {
       this.shootingSound = new Howl({
-        src: ['snd/laser_shoot.ogg', 'snd/laser_shoot.mp3'],
+        src: ['assets/snd/laser_shoot.ogg', 'assets/snd/laser_shoot.mp3'],
       });
       this.shootingSound.on('load', () => {
         resolve();

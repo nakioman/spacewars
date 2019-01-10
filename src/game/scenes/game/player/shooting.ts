@@ -1,7 +1,7 @@
 import { Container, loaders } from 'pixi.js';
+import GameScene from '../';
+import Viewport from '../../../engine/viewport';
 import BodySprite from '../common/bodySprite';
-import Viewport from '../engine/viewport';
-import GameScene from '../scenes/game';
 import ProyectileSprite from './proyectileSprite';
 
 const bulletSpeed: number = 5;
