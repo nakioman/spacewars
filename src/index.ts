@@ -1,9 +1,9 @@
-import { Howler } from 'howler';
 import { autoDetectRenderer, Container } from 'pixi.js';
 import Viewport from './game/engine/viewport';
 import GameScene from './game/scenes/game';
 
 import './css/styles.css';
+import Settings from './game/engine/settings';
 
 const body = document.body;
 const stage = new Container();
@@ -31,4 +31,4 @@ const update = (): void => {
   requestAnimationFrame(update);
 };
 
-Howler.mute(true);
+Settings.initialize();
