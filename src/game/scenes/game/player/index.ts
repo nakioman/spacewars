@@ -36,6 +36,7 @@ export default class Player implements ISceneObject, IPosition, IHitArea, IDestr
   private playerMovement: PlayerMovement;
   private shooting: Shooting;
   private shootingSound: Howl;
+  private explodeSound: Howl;
 
   public constructor(private scene: GameScene) {}
 
@@ -46,6 +47,14 @@ export default class Player implements ISceneObject, IPosition, IHitArea, IDestr
         src: ['assets/snd/laser_shoot.ogg', 'assets/snd/laser_shoot.mp3'],
       });
       this.shootingSound.on('load', () => {
+        resolve();
+      });
+    });
+    await new Promise<void>((resolve) => {
+      this.explodeSound = new Howl({
+        src: ['assets/snd/player_explosion.ogg', 'assets/snd/player_explosion.mp3'],
+      });
+      this.explodeSound.on('load', () => {
         resolve();
       });
     });
@@ -63,6 +72,7 @@ export default class Player implements ISceneObject, IPosition, IHitArea, IDestr
       playerTexture,
       explosionParticle,
       this.object,
+      this.explodeSound,
     );
     this.playerMovement = new PlayerMovement(this.body);
     this.shooting = new Shooting(

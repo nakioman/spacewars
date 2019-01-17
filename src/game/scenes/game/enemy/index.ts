@@ -15,6 +15,7 @@ export default class Enemy implements ISceneObject, IPosition, IShootable {
   private movement: EnemyMovement;
   private spriteSheet: loaders.Resource;
   private object: Container = new Container();
+  private explodeSound: Howl;
 
   public get x(): number {
     return this.body.x;
@@ -28,6 +29,14 @@ export default class Enemy implements ISceneObject, IPosition, IShootable {
 
   public async preload() {
     this.spriteSheet = await ResourceManager.create('gameSheet', 'assets/img/sheet.json');
+    await new Promise<void>((resolve) => {
+      this.explodeSound = new Howl({
+        src: ['assets/snd/enemy_explosion.ogg', 'assets/snd/enemy_explosion.mp3'],
+      });
+      this.explodeSound.on('load', () => {
+        resolve();
+      });
+    });
   }
 
   public create(scene: IScene) {
@@ -38,7 +47,7 @@ export default class Enemy implements ISceneObject, IPosition, IShootable {
     const bodyTexture = this.spriteSheet.textures[textureName];
     const explosionParticle = getParticle();
 
-    this.body = new RotableBodySprite(x, y, bodyTexture, explosionParticle, this.object);
+    this.body = new RotableBodySprite(x, y, bodyTexture, explosionParticle, this.object, this.explodeSound);
     this.movement = new EnemyMovement(this.body, this.playerPosition);
 
     scene.container.addChild(this.object);

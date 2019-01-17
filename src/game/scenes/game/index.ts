@@ -61,7 +61,7 @@ export default class GameScene implements IScene, IScore {
 
   private cleanEnemies() {
     const liveEnemies = this.enemies.filter((enemy) => enemy.health > 0);
-    this.score += this.enemies.length - liveEnemies.length;
+    this.score += (this.enemies.length - liveEnemies.length);
     this.enemies = liveEnemies;
   }
 

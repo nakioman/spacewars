@@ -40,6 +40,7 @@ export default class BodySprite {
     bodyTexture: Texture,
     explosionParticle: any,
     private container: Container,
+    private sound: Howl,
   ) {
     const explosionTexture = ResourceManager.textureFromImage(explosionTextureName);
 
@@ -63,5 +64,6 @@ export default class BodySprite {
     this.container.removeChild(this.body);
     this.explosion.updateSpawnPos(this.body.x, this.body.y);
     this.explosion.playOnceAndDestroy();
+    this.sound.play();
   }
 }
